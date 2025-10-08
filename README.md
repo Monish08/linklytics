@@ -12,8 +12,6 @@ Linklytics is a modern, full-stack URL shortener with analytics. Built with MERN
 - **Dark Mode**: shadcn/ui theme toggle.
 - **Responsive**: Mobile-friendly with Tailwind CSS.
 
-<image-card alt="Screenshot" src="screenshot.png" ></image-card>  <!-- Add a screenshot here if you have one -->
-
 ## 🛠 Tech Stack
 - **Frontend**: React + Vite + Tailwind CSS + shadcn/ui + Sonner (toasts)
 - **Backend**: Node.js + Express + MongoDB (Atlas)
@@ -29,8 +27,78 @@ Linklytics is a modern, full-stack URL shortener with analytics. Built with MERN
 
 ### Backend Setup
 1. Clone repo and cd to `backend/`:
-```bash
-cd backend
-npm install
+   ```bash
+   cd backend
+   npm install
+   ```
+2. Create `.env`:
+   ```bash
+   MONGODB_URI=your-mongodb-uri
+   PORT=5000
+   JWT_SECRET=your-jwt-secret
+   ```
+3. Run:
+   ```bash
+   node server.js
+   ```
+   Backend on http://localhost:5000.
 
-Create .env:
+### Frontend Setup
+1. Cd to `frontend/`:
+   ```bash
+   cd frontend
+   npm install
+   ```
+2. Update `src/api.js` baseURL if backend port changes.  
+3. Run:
+   ```bash
+   npm run dev
+   ```
+   Frontend on http://localhost:5173.
+
+### Testing
+- Signup/Login at /login.
+- Shorten URL in dashboard—test batch, password, expire.
+- Analytics at /analytics/[code].
+- Protected: Visit shortLink → Password prompt → Enter pw → Opens original.
+
+## 🔧 Deployment
+
+### Frontend (Vercel)
+1. Push to GitHub.
+2. Vercel dashboard > Import repo > Deploy (auto-detects Vite).
+3. Add env var `VITE_API_URL=your-backend-url/api`.
+
+### Backend (Render)
+1. Push backend to GitHub.
+2. Render dashboard > New Web Service > Connect repo > Node environment.
+3. Add env vars (MONGODB_URI, JWT_SECRET).
+4. Deploy—URL like `linklytics-backend.onrender.com`.
+
+## 📁 Project Structure
+```
+linklytics/
+├── backend/
+│   ├── models/
+│   ├── routes/
+│   ├── middleware/
+│   ├── server.js
+│   └── .env
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── api.js
+│   │   └── App.jsx
+│   ├── vite.config.js
+│   └── index.css
+├── .gitignore
+└── README.md
+```
+
+## 🤝 Contributing
+Fork, PR, or open issues. Tests with Postman for backend routes.
+
+## 📄 License
+MIT License—feel free to use/modify.
+
+Built with ❤️ by Mickey. Questions? Open an issue!
