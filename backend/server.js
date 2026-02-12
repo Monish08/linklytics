@@ -33,6 +33,9 @@ app.use('/api/urls/shorten', limiter);
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('Mongo connect error:', err));
+app.get("/", (req,res)=>{
+  res.send("Linklytics API running 🚀");
+});
 
 // Routes
 app.use('/api/auth', authRoutes);
