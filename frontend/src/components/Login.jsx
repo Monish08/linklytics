@@ -32,7 +32,7 @@ const Login = () => {
     <div className="flex min-h-[80vh] items-center justify-center">
       <Card className="w-[400px]">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl">✍️ Login to Teensy</CardTitle>
+          <CardTitle className="text-2xl">✍️ Login to Linklytics</CardTitle>
           <CardDescription>Enter your details to access your dashboard</CardDescription>
         </CardHeader>
         <CardContent>
