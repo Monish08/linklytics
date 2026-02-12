@@ -37,6 +37,10 @@ app.get("/", (req,res)=>{
   res.send("Linklytics API running 🚀");
 });
 
+  app.get("/", (req,res)=>{
+  res.send("Linklytics API running 🚀");
+});
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/urls', urlRoutes);
