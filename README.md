@@ -73,32 +73,4 @@ Linklytics is a modern, full-stack URL shortener with analytics. Built with MERN
 1. Push backend to GitHub.
 2. Render dashboard > New Web Service > Connect repo > Node environment.
 3. Add env vars (MONGODB_URI, JWT_SECRET).
-4. Deploy—URL like `linklytics-backend.onrender.com`.
 
-## 📁 Project Structure
-```
-linklytics/
-├── backend/
-│   ├── models/
-│   ├── routes/
-│   ├── middleware/
-│   ├── server.js
-│   └── .env
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── api.js
-│   │   └── App.jsx
-│   ├── vite.config.js
-│   └── index.css
-├── .gitignore
-└── README.md
-```
-
-## 🤝 Contributing
-Fork, PR, or open issues. Tests with Postman for backend routes.
-
-## 📄 License
-MIT License—feel free to use/modify.
-
-Built with ❤️ by Mickey. Questions? Open an issue!
