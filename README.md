@@ -1,76 +1,119 @@
-# Linklytics 🧬
+# 🔗 Linklytics
 
-Linklytics is a modern, full-stack URL shortener with analytics. Built with MERN (MongoDB, Express, React, Node.js) + Vite for fast dev. Features password protection, max clicks, auto-expire, batch shortening, QR codes, and WhatsApp sharing.
+Linklytics is a full-stack URL shortener with analytics built using the MERN stack + Vite.  
+Create secure, trackable short links with features like expiration, password protection, and QR sharing.
+
+---
+
+## 🌐 Live Demo
+Frontend → https://linklytics-ecru.vercel.app  
+Backend → https://linklytics-api.onrender.com
+
+---
 
 ## ✨ Features
-- **Shorten URLs**: Auto-generate codes or custom aliases.
-- **Analytics**: Track clicks, referrers, IP, geo (country/city).
-- **Security**: Password-protected links with prompt page.
-- **Limits**: Max clicks (auto-delete after X) + auto-expire by date.
-- **Batch Mode**: Shorten multiple URLs at once.
-- **QR & Share**: Generate QR codes, copy links, share via WhatsApp.
-- **Dark Mode**: shadcn/ui theme toggle.
-- **Responsive**: Mobile-friendly with Tailwind CSS.
+- Shorten URLs with custom aliases
+- Analytics (clicks, referrer, geo data)
+- Password-protected links
+- Expiry date + click limits
+- Batch URL shortening
+- QR code generation
+- WhatsApp sharing
+- Dark mode UI
+- Responsive design
+
+---
 
 ## 🛠 Tech Stack
-- **Frontend**: React + Vite + Tailwind CSS + shadcn/ui + Sonner (toasts)
-- **Backend**: Node.js + Express + MongoDB (Atlas)
-- **Other**: bcrypt (hashing), nanoid (codes), geoip-lite (geo), qrcode.react (QR)
-- **Deployment**: Vercel (frontend), Render (backend)
 
-## 🚀 Quick Start
+**Frontend**
+- React + Vite
+- Tailwind CSS
+- shadcn/ui
+- Axios
 
-### Prerequisites
-- Node.js 18+
-- MongoDB Atlas account (free tier)
-- GitHub account for deployment
+**Backend**
+- Node.js
+- Express
+- MongoDB Atlas
 
-### Backend Setup
-1. Clone repo and cd to `backend/`:
-   ```bash
-   cd backend
-   npm install
-   ```
-2. Create `.env`:
-   ```bash
-   MONGODB_URI=your-mongodb-uri
-   PORT=5000
-   JWT_SECRET=your-jwt-secret
-   ```
-3. Run:
-   ```bash
-   node server.js
-   ```
-   Backend on http://localhost:5000.
+**Libraries**
+- bcrypt
+- nanoid
+- geoip-lite
+- qrcode.react
 
-### Frontend Setup
-1. Cd to `frontend/`:
-   ```bash
-   cd frontend
-   npm install
-   ```
-2. Update `src/api.js` baseURL if backend port changes.  
-3. Run:
-   ```bash
-   npm run dev
-   ```
-   Frontend on http://localhost:5173.
+---
 
-### Testing
-- Signup/Login at /login.
-- Shorten URL in dashboard—test batch, password, expire.
-- Analytics at /analytics/[code].
-- Protected: Visit shortLink → Password prompt → Enter pw → Opens original.
+## 🚀 Run Locally
+
+### Clone repo
+```bash
+git clone https://github.com/Monish08/linklytics.git
+cd linklytics
+```
+
+---
+
+### Backend setup
+```bash
+cd backend
+npm install
+```
+
+Create `.env`
+```
+MONGODB_URI=your_uri
+JWT_SECRET=your_secret
+PORT=5000
+```
+
+Run:
+```bash
+node server.js
+```
+
+---
+
+### Frontend setup
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+---
 
 ## 🔧 Deployment
 
 ### Frontend (Vercel)
-1. Push to GitHub.
-2. Vercel dashboard > Import repo > Deploy (auto-detects Vite).
-3. Add env var `VITE_API_URL=your-backend-url/api`.
+- Import repo
+- Root directory → `frontend`
+- Add env:
+```
+VITE_API_URL=https://your-backend-url.onrender.com
+```
+
+---
 
 ### Backend (Render)
-1. Push backend to GitHub.
-2. Render dashboard > New Web Service > Connect repo > Node environment.
-3. Add env vars (MONGODB_URI, JWT_SECRET).
+- Root directory → `backend`
+- Add env:
+```
+MONGODB_URI
+JWT_SECRET
+CLIENT_URL=https://linklytics-ecru.vercel.app
+```
 
+---
+
+## 📌 Highlights
+- JWT authentication
+- Rate-limited API
+- Geo tracking analytics
+- Production-ready deployment
+
+---
+
+## 📜 License
+MIT
