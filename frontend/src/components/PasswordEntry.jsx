@@ -13,14 +13,22 @@ const PasswordEntry = () => {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
 
+  const BASE_URL = import.meta.env.VITE_API_URL
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
+
     try {
-      const response = await axios.get(`http://localhost:5000/api/urls/${shortCode}/validate?pw=${password}`)
+      const response = await axios.get(
+        `${BASE_URL}/api/urls/${shortCode}/validate`,
+        { params: { pw: password } }
+      )
+
       const { originalUrl } = response.data
+
       toast.success('Access granted!')
-      window.open(originalUrl, '_blank')  // ← Opens in new tab
+      window.location.href = originalUrl  // Better than window.open
     } catch (err) {
       if (err.response?.status === 401) {
         toast.error('Incorrect password—try again')
@@ -30,6 +38,7 @@ const PasswordEntry = () => {
         toast.error('Access denied')
       }
     }
+
     setLoading(false)
   }
 
@@ -41,25 +50,36 @@ const PasswordEntry = () => {
             <Lock className="h-6 w-6 text-destructive" />
             Protected Link
           </CardTitle>
-          <p className="text-muted-foreground">Enter the password to access the link.</p>
+          <p className="text-muted-foreground">
+            Enter the password to access the link.
+          </p>
         </CardHeader>
+
         <CardContent className="p-6">
           <form onSubmit={handleSubmit} className="space-y-4">
-            <Input 
-              type="password" 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
-              placeholder="Enter password" 
-              required 
+            <Input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter password"
+              required
               className="text-lg"
             />
+
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+              {loading && (
+                <Loader2 className="h-4 w-4 animate-spin mr-2" />
+              )}
               {loading ? 'Unlocking...' : 'Unlock & Go'}
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
           </form>
-          <Button onClick={() => navigate('/dashboard')} className="w-full mt-4" variant="secondary">
+
+          <Button
+            onClick={() => navigate('/dashboard')}
+            className="w-full mt-4"
+            variant="secondary"
+          >
             Back to Home
           </Button>
         </CardContent>
