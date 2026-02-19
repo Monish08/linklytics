@@ -32,7 +32,7 @@ const Signup = () => {
     <div className="flex min-h-[80vh] items-center justify-center">
       <Card className="w-[400px]">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl">🚀 Sign Up for Teensy</CardTitle>
+          <CardTitle className="text-2xl">🚀 Sign Up for Linklytics</CardTitle>
           <CardDescription>Create an account to shorten and track your links</CardDescription>
         </CardHeader>
         <CardContent>
