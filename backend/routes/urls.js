@@ -7,6 +7,24 @@ const bcrypt = require('bcryptjs');
 const auth = require('../middleware/auth');
 const geoip = require('geoip-lite');
 const router = express.Router();
+const clientUrl = process.env.CLIENT_URL;
+// Get user's short URLs (protected, filter non-expired)
+router.get('/', auth, async (req, res) => {
+  try {
+    const now = new Date();
+    const urls = await ShortURL.find({ 
+      userId: req.user._id, 
+      $or: [
+        { expireAt: { $gt: now } },
+        { expireAt: null }
+      ]
+    }).sort({ createdAt: -1 }).limit(20);
+    res.json(urls);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 // Shorten URL (protected)
 router.post('/shorten', auth, async (req, res) => {
@@ -57,7 +75,8 @@ router.post('/shorten', auth, async (req, res) => {
     const savedUrl = await newUrl.save();
     console.log('Shorten: Saved successfully, ID:', savedUrl._id);
 
-    res.json({ shortLink: `${req.get('host')}/api/urls/${shortCode}` });
+    res.json({ shortLink: `${process.env.BASE_URL}/${shortCode}` });
+
   } catch (err) {
     console.error('Shorten route error:', err);
     res.status(500).json({ error: err.message });
@@ -80,7 +99,7 @@ router.get('/:shortCode', async (req, res) => {
   const { pw } = req.query;
   if (!pw || !(await bcrypt.compare(pw, url.password))) {
     // Fix: Redirect to frontend password page on port 5173 (Vite)
-    return res.redirect(`http://localhost:5173/password/${shortCode}`);
+   return res.redirect(`${clientUrl}/password/${shortCode}`);
   }
 }
 
@@ -132,39 +151,6 @@ router.get('/:shortCode/analytics', auth, async (req, res) => {
     res.status(500).send(err.message);
   }
 });
-
-// Get user's short URLs (protected, filter non-expired)
-router.get('/', auth, async (req, res) => {
-  try {
-    const now = new Date();
-    const urls = await ShortURL.find({ 
-      userId: req.user._id, 
-      $or: [
-        { expireAt: { $gt: now } },
-        { expireAt: null }
-      ]
-    }).sort({ createdAt: -1 }).limit(20);
-    res.json(urls);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Delete URL (protected)
-router.delete('/:shortCode', auth, async (req, res) => {
-  try {
-    const { shortCode } = req.params;
-    const url = await ShortURL.findOne({ shortCode, userId: req.user._id });
-    if (!url) return res.status(404).json({ error: 'Not found or not yours' });
-
-    await ClickLog.deleteMany({ shortUrl: url._id });
-    await ShortURL.findByIdAndDelete(url._id);
-
-    res.json({ message: 'URL deleted successfully' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 // Validate password for protected URL (public, returns JSON)
 router.get('/:shortCode/validate', async (req, res) => {
   try {
@@ -194,4 +180,20 @@ router.get('/:shortCode/validate', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+// Delete URL (protected)
+router.delete('/:shortCode', auth, async (req, res) => {
+  try {
+    const { shortCode } = req.params;
+    const url = await ShortURL.findOne({ shortCode, userId: req.user._id });
+    if (!url) return res.status(404).json({ error: 'Not found or not yours' });
+
+    await ClickLog.deleteMany({ shortUrl: url._id });
+    await ShortURL.findByIdAndDelete(url._id);
+
+    res.json({ message: 'URL deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
