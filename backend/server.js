@@ -11,6 +11,9 @@ const urlRoutes = require("./routes/urls");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+/* Trust proxy (important for Render IP logging) */
+app.set("trust proxy", true);
+
 /* Middleware */
 
 app.use(cors({
@@ -40,10 +43,13 @@ app.get("/", (req,res)=>{
   res.send("Linklytics API running 🚀");
 });
 
-/* Routes */
+/* API Routes */
 
 app.use("/api/auth", authRoutes);
 app.use("/api/urls", urlRoutes);
+
+/* 🔥 IMPORTANT: Enable clean short links */
+app.use("/", urlRoutes);
 
 /* Start server only after DB connects */
 
